@@ -1,53 +1,59 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 int main() {
-    // Create a window with a title and size
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Shapes");
+    // Define the video mode (dimensions)
+    sf::VideoMode videoMode = sf::VideoMode(800, 600);
 
-    // Create a green circle
-    float circleRadius = 50.0f;
-    sf::CircleShape greenCircle(circleRadius);
-    greenCircle.setFillColor(sf::Color::Green);
-    greenCircle.setPosition(window.getSize().x / 4 - circleRadius, window.getSize().y / 2 - circleRadius);
-
-    // Create a red square
-    float squareSize = 100.0f;
-    sf::RectangleShape redSquare(sf::Vector2f(squareSize, squareSize));
-    redSquare.setFillColor(sf::Color::Red);
-    redSquare.setPosition(window.getSize().x / 2 - squareSize / 2, window.getSize().y / 2 - squareSize / 2);
-
-    // Create a blue triangle
-    sf::ConvexShape blueTriangle;
-    blueTriangle.setPointCount(3);
-    blueTriangle.setPoint(0, sf::Vector2f(0, squareSize));
-    blueTriangle.setPoint(1, sf::Vector2f(squareSize / 2, 0));
-    blueTriangle.setPoint(2, sf::Vector2f(squareSize, squareSize));
-    blueTriangle.setFillColor(sf::Color::Blue);
-    blueTriangle.setPosition(window.getSize().x * 3 / 4 - squareSize / 2, window.getSize().y / 2 - squareSize / 2);
+    // Create a window object with specific dimensions and a title
+    sf::RenderWindow window(videoMode, "SFML Window");
 
     // Main loop that continues until the window is closed
     while (window.isOpen()) {
-        // Create an event object
         sf::Event event;
-
-        // Poll for events
         while (window.pollEvent(event)) {
-            // Check if the event type is a close event or a key press event for Esc key
-            if (event.type == sf::Event::Closed ||
-                (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
+            // Check for window closure
+            if (event.type == sf::Event::Closed)
                 window.close();
-            }
         }
 
-        // Clear the window with a white color
-        window.clear(sf::Color::White);
+        // Clear the window
+        window.clear(sf::Color::Blue);
 
-        // Draw the shapes
-        window.draw(greenCircle);
-        window.draw(redSquare);
-        window.draw(blueTriangle);
+        // Draw a circle
+        sf::CircleShape circle(50); // Radius 50
+        circle.setFillColor(sf::Color::Red);
+        circle.setPosition(300, 300); // Set position
+        window.draw(circle);
 
-        // Display the contents of the window
+        // Load and draw the texture
+        sf::Texture outscal_texture;
+        if (!outscal_texture.loadFromFile("assets/textures/outscal_logo.png")) {
+            std::cerr << "Error loading texture" << std::endl;
+            return -1; // Exit if texture loading fails
+        }
+        sf::Sprite outscal_sprite;
+        outscal_sprite.setTexture(outscal_texture);
+
+        // Set sprite properties
+        outscal_sprite.setPosition(200, 100); // Position
+        outscal_sprite.setRotation(45); // Rotation in degrees
+        outscal_sprite.setScale(0.5, 0.5); // Scale factor
+
+        window.draw(outscal_sprite);
+
+        // Load and draw the text
+        sf::Font font;
+        if (!font.loadFromFile("assets/fonts/OpenSans.ttf")) {
+            std::cerr << "Error loading font" << std::endl;
+            return -1; // Exit if font loading fails
+        }
+        sf::Text text("Hello SFML!", font, 50);
+        text.setFillColor(sf::Color::Red);
+        text.setPosition(150, 450); // Set position for the text
+        window.draw(text);
+
+        // Display what was drawn
         window.display();
     }
 
