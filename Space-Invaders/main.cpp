@@ -3,7 +3,7 @@
 int main() {
 
     // Define the video mode (dimensions)
-    sf::VideoMode videoMode = sf::VideoMode(800, 600);
+    sf::VideoMode videoMode = sf::VideoMode(800, 800);
 
     // Create a window object with specific dimensions and a title
     sf::RenderWindow window(videoMode, "SFML Window");
@@ -22,28 +22,24 @@ int main() {
         // Clear the window
         window.clear(sf::Color::Blue);
 
-
-        // Draw a circle
-        sf::CircleShape circle(50); // Radius 50
-        circle.setFillColor(sf::Color::Red);
-        circle.setPosition(300, 300); // Set position
-        window.draw(circle);
-
+        // Texture
         sf::Texture outscal_texture;
         outscal_texture.loadFromFile("assets/textures/outscal_logo.png");
 
+        // Sprite
         sf::Sprite outscal_sprite;
         outscal_sprite.setTexture(outscal_texture);
 
-        outscal_sprite.setPosition(200, 100); // Position
+        outscal_sprite.setPosition(100, 100); // Position
         outscal_sprite.setRotation(45); // Rotation in degrees
         outscal_sprite.setScale(0.5, 0.5); // Scale factor
 
         window.draw(outscal_sprite);
 
-        sf::Text text("Hello SFML!", font, 50);
-        text.setFillColor(sf::Color::Red);
-        text.setPosition(150, 450); // Set position for the text
+        sf::Font font;
+        font.loadFromFile("assets/fonts/OpenSans.ttf");
+        sf::Text text("SFML is Awesome!", font, 50);
+        text.setFillColor(sf::Color::White);
         window.draw(text);
 
         // Display what was drawn
