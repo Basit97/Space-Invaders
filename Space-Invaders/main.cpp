@@ -1,50 +1,36 @@
 #include <SFML/Graphics.hpp>
 
+// Creating an empty Player class
+class Player {
+public:
+    // Declaring Player data
+    sf::Texture texture;
+    sf::Sprite sprite;
+    int playerScore;
+    int health;
+    int movementSpeed;
+    sf::Vector2f position;
+
+    // Declaring Player methods
+    void takeDamage();
+    void move();
+    void shootBullets();
+};
+
+// Implementation of the methods can be done here or in a separate .cpp file
+void Player::takeDamage() {
+    // Implementation for taking damage
+}
+
+void Player::move() {
+    // Implementation for moving the player
+}
+
+void Player::shootBullets() {
+    // Implementation for shooting bullets
+}
+
 int main() {
-
-    // Define the video mode (dimensions)
-    sf::VideoMode videoMode = sf::VideoMode(800, 800);
-
-    // Create a window object with specific dimensions and a title
-    sf::RenderWindow window(videoMode, "SFML Window");
-
-
-
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            // Check for window closure
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-
-        // Clear the window
-        window.clear(sf::Color::Blue);
-
-        // Texture
-        sf::Texture outscal_texture;
-        outscal_texture.loadFromFile("assets/textures/outscal_logo.png");
-
-        // Sprite
-        sf::Sprite outscal_sprite;
-        outscal_sprite.setTexture(outscal_texture);
-
-        outscal_sprite.setPosition(100, 100); // Position
-        outscal_sprite.setRotation(45); // Rotation in degrees
-        outscal_sprite.setScale(0.5, 0.5); // Scale factor
-
-        window.draw(outscal_sprite);
-
-        sf::Font font;
-        font.loadFromFile("assets/fonts/OpenSans.ttf");
-        sf::Text text("SFML is Awesome!", font, 50);
-        text.setFillColor(sf::Color::White);
-        window.draw(text);
-
-        // Display what was drawn
-        window.display();
-    }
-
+    // Main function where the game loop and other initializations would typically be
     return 0;
 }
