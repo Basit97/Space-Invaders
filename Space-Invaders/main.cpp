@@ -2,44 +2,48 @@
 
 class Player {
 public:
-    sf::Texture player_texture;
-    sf::Sprite player_sprite;
-    sf::Vector2f position;
-
-    Player() {
-        position.x = 400;
-        position.y = 400;
+    Player(float startX, float startY, float moveSpeed)
+        : position(startX, startY), move_speed(moveSpeed) {
+        if (!player_texture.loadFromFile("assets/textures/player_ship.png")) {
+            // Handle loading error
+        }
+        player_sprite.setTexture(player_texture);
+        player_sprite.setPosition(position);
     }
 
-    void move(float dx, float dy) {
-        position.x += dx;
-        position.y += dy;
+    void move(float deltaX) {
+        position.x += deltaX;
+        player_sprite.setPosition(position);
     }
 
     sf::Vector2f getPosition() const {
         return position;
     }
+
+    void setPosition(float x, float y) {
+        position.x = x;
+        position.y = y;
+        player_sprite.setPosition(position);
+    }
+
+    void draw(sf::RenderWindow& window) {
+        window.draw(player_sprite);
+    }
+
+    float move_speed;
+
+private:
+    sf::Vector2f position;
+    sf::Texture player_texture;
+    sf::Sprite player_sprite;
 };
 
 int main() {
-    // Create a video mode object
-    sf::VideoMode videoMode(800, 600);
-    // Create a render window object
-    sf::RenderWindow window(videoMode, "SFML Window");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Player Movement");
 
-    // Create a player object
-    Player player;
-    // Load the player texture
-    if (!player.player_texture.loadFromFile("assets/textures/player_ship.png")) {
-        // Handle error
-        return -1;
-    }
-    // Set the texture to the player sprite
-    player.player_sprite.setTexture(player.player_texture);
+    Player player(400.0f, 300.0f, 1.0f); // move_speed is set to 1.0f
 
-    // Main loop
     while (window.isOpen()) {
-        // Event handling
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -47,23 +51,15 @@ int main() {
             }
         }
 
-        // Input handling
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            player.move(-1.0f, 0.0f);
+            player.move(-1.0f); // Move left by 1 unit
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            player.move(1.0f, 0.0f);
+            player.move(1.0f); // Move right by 1 unit
         }
 
-        // Clear the window
-        window.clear(sf::Color::Blue);
-
-        // Set the player position
-        player.player_sprite.setPosition(player.getPosition());
-        // Draw the player to the screen
-        window.draw(player.player_sprite);
-
-        // Display the window
+        window.clear();
+        player.draw(window);
         window.display();
     }
 
