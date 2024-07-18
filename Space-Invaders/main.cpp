@@ -1,5 +1,4 @@
-#include <SFML/Graphics.hpp>
-
+/*#include <SFML/Graphics.hpp>
 class Player {
 public:
     Player(float startX, float startY, float moveSpeed)
@@ -65,3 +64,10 @@ int main() {
 
     return 0;
 }
+*/
+#include "Header/GameService.h"
+using namespace std;
+GameService game_service;
+game_service.ignite();
+
+

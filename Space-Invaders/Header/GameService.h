@@ -8,7 +8,7 @@ private:
 
 public:
 	GameService();			// Constructor for initializing the GameService object.
-	~GameService();	    // Destructor for cleaning up resources upon object deletion.
+	~GameService();	       // Destructor for cleaning up resources upon object deletion.
 
 	void ignite();			// Initiates the game.
 	void update();			// Updates the game logic and game state.
